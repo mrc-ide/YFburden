@@ -1,5 +1,7 @@
 ---
-output: github_document
+output: 
+  github_document:
+    df_print: "kable"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -60,4 +62,20 @@ output_df = run_burden_for_template(historic_dat,
                                     life_exp_GAVI,
                                     template,
                                     run_id = NA)
+```
+
+Then `output_df` would look something like this:
+
+```{r output, echo = FALSE}
+
+output_df = data.frame(disease = "YF",
+                       year = 2000,
+                       age = 0,
+                       country = "AGO",
+                       country_name = "Angola",
+                       cohort_size = 700752,
+                       deaths =  13,
+                       cases = 27,
+                       dalys = 715)
+output_df
 ```

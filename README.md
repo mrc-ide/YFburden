@@ -50,3 +50,9 @@ output_df = run_burden_for_template(historic_dat,
                                     template,
                                     run_id = NA)
 ```
+
+Then `output_df` would look something like this:
+
+| disease |  year|  age| country | country\_name |  cohort\_size|  deaths|  cases|  dalys|
+|:--------|-----:|----:|:--------|:--------------|-------------:|-------:|------:|------:|
+| YF      |  2000|    0| AGO     | Angola        |        700752|      13|     27|    715|
