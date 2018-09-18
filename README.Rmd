@@ -36,13 +36,13 @@ devtools::install_github("mrc-ide/YFburden")
 
 #GAVI_switch = "routine", "no-vaccination", "preventive"
 
-#param_samples = a vector of transmission intesities across the region
+#param_samples = a vector of transmission intensities across the region
 
 #pop_all = population size by year, age and country FROM MONTAGU
 
 #P_severe = probability of a severe yellow fever infection
 
-#P_severeDeath = probability that an individual with sever yellow fever dies
+#P_severeDeath = probability that an individual with severe yellow fever dies
 
 #life_exp_GAVI = life expectancies by year, age and countries  FROM MONTAGU
 
