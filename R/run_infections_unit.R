@@ -1,3 +1,134 @@
+#' move on immunity profile through ageing
+#'
+#' @param immunity current immunity profile
+#' @return New immunity profile by age
+#'
+
+update_immunity = function(immunity) {
+  ## takes the proportion of immune people in each age class should be a vector, of length n.ages.
+
+  immunity_next = c(0, immunity[-length(immunity)])
+  names(immunity_next) = names(immunity)
+
+  return(immunity_next)
+}
+
+
+
+
+#' add vaccination coverage to change immunity profile
+#'
+#' @param coverage vaccination campaign coverage
+#' @param age_first youngest age group to be vaccinated
+#' @param age_last oldest age group to be vaccinated
+#' @param immunity current immunity in one year
+#' @param skew skew of vaccination. Defaults to 0 where vaccination is random
+#' @return The immunity profile by age in one year
+#' add_vaccination()
+
+add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
+  ## year is the year of vaccination of the new birth cohort.
+  if (is.na(skew)) {
+    skew = 0
+  }
+  coverage = pmin(coverage, 1)  #check that it is at most 1
+
+  ## immunity is the age distribution of immunity at the time point in question.  this adds vaccination as if the skew = 0
+  if (skew == 0) {
+    if (age_first != age_last) {
+      immunity[paste0(age_first):paste0(age_last)] = 1 - (1 - coverage) * (1 - immunity[paste0(age_first):paste0(age_last)])
+    } else {
+      immunity[paste0(age_first)] = 1 - (1 - coverage) * (1 - immunity[paste0(age_first)])
+    }
+  } else if (skew == -1) {
+    if (age_first != age_last) {
+      immunity[paste0(age_first):paste0(age_last)] = pmin(1, coverage + immunity[paste0(age_first):paste0(age_last)])
+    } else {
+      immunity[paste0(age_first)] = pmin(1, coverage + immunity[paste0(age_first)])
+    }
+  }
+  return(immunity)
+}
+
+
+
+
+#' calculate the number of infections in a year for all age groups in R0 model
+#'
+#' @param R0 R0 in country
+#' @param pop population by age in one year
+#' @param immunity current immunity profile by age in one year
+#' @return The number of new infections in one year and the immunity profile by age in one year
+#' generate_infections_R0()
+
+generate_infections_R0 = function(R0, pop, immunity) {
+
+
+
+  herd_immunity = 1 - (1/R0)
+  sus = pop * (1 - immunity)
+  prop_sus = sum(sus)/sum(pop)
+  prop_to_infect = herd_immunity - (1 - prop_sus)  ## proportion of the population
+  if (prop_to_infect < 0) {
+    ## don't do any infections.
+    new_infect = rep(0, length(pop))
+    names(new_infect) = names(pop)
+    new_immunity = immunity
+  } else {
+    ## put in infections as appropriate, by newly infecting prop_to_infect of each susceptible age category:
+    prop_sus_to_infect = prop_to_infect/prop_sus
+    new_infect = sus * prop_sus_to_infect
+    new_immunity = (pop - sus + new_infect)/pop
+    new_immunity[is.na(new_immunity)] = 0
+
+    if (abs(sum(new_immunity * pop)/sum(pop) - herd_immunity) > .Machine$double.eps * 2) {
+      stop("generate_infections_R0: new immunity different from herd immunity.\n")
+    }
+  }
+
+  return(list(new_infections = new_infect, immunity = new_immunity))
+}
+
+
+
+
+#' calculate the number of infections in a year for all age groups in Foi model
+#'
+#' @param foi Foi in country
+#' @param pop population by age in one year
+#' @param immunity current immunity profile by age in one year
+#' @return The immunity profile by age in one year and the number of infections for that year
+#' generate_infections_static()
+
+
+generate_infections_static = function(foi, pop, immunity) {
+  ## foi is a scalar
+
+  ## pop and immunity are vectors of length age.max+1, hopefully with ages as names, with pop giving absolute population size, and immunity the proportion immune
+  ## in each age category.
+
+  ## returns vectors new.infections and immunity of the same format as pop and immunity.
+
+
+  sus = pop * (1 - immunity)
+
+  prop_sus_to_infect = foi
+  new_infect = sus * prop_sus_to_infect
+
+  new_immunity = (pop - sus + new_infect)/pop
+
+  new_immunity[is.na(new_immunity)] = 0
+
+  rownames(new_immunity) = rownames(immunity)
+  colnames(new_immunity) = colnames(immunity)
+
+  return(list(new_infections = new_infect, immunity = new_immunity))
+}
+
+
+
+
+
 #' calculate the number of infections in a country for the years specified
 #'
 #' @param model_type whether R0 or Foi. Defaults to Foi
