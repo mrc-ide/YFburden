@@ -5,7 +5,7 @@
 \title{calculates the number of deaths and DALYS}
 \usage{
 Death_and_DALYs(new_infections, P_severe, P_severeDeath, d_acute, dw_acute,
-  d_conv, dw_conv, pop, life_exp)
+  d_conv, dw_conv, life_exp)
 }
 \arguments{
 \item{new_infections}{number of infections}
@@ -22,12 +22,10 @@ Death_and_DALYs(new_infections, P_severe, P_severeDeath, d_acute, dw_acute,
 
 \item{dw_conv}{disability weight if convalescent}
 
-\item{pop}{population sizes}
-
 \item{life_exp}{life expectancies}
 }
 \value{
-the numbers of deaths and dalys in each country and year
+the numbers of deaths and dalys in each country and year IN DEVELOPMENT
 }
 \description{
 calculates the number of deaths and DALYS

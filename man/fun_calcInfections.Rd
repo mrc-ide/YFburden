@@ -4,7 +4,7 @@
 \alias{fun_calcInfections}
 \title{Calculate the number of infections}
 \usage{
-fun_calcInfections(param_samples, coverage_df, pop_all, years)
+fun_calcInfections(param_samples, coverage_df, pop_all, years, age_max)
 }
 \arguments{
 \item{param_samples}{transmission intensity in each admin 1 unit}
@@ -13,7 +13,9 @@ fun_calcInfections(param_samples, coverage_df, pop_all, years)
 
 \item{pop_all}{population in al countries by year and age}
 
-\item{years}{years of interest}
+\item{age_max}{maximum age in output so age range is [0, age_max]}
+
+\item{year}{year of interest}
 }
 \value{
 The number of infections in each country in each year of interest
