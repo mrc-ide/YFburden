@@ -21,5 +21,34 @@ Example
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-## basic example code
+#historic_dat = vaccination campaigns before 2000 (pre-GAVI)
+
+#GAVI_preventative = GAVI projected vaccination activities FROM MONTAGU
+
+#GAVI_switch = "routine", "no-vaccination", "preventive"
+
+#param_samples = a vector of transmission intesities across the region
+
+#pop_all = population size by year, age and country FROM MONTAGU
+
+#P_severe = probability of a severe yellow fever infection
+
+#P_severeDeath = probability that an individual with sever yellow fever dies
+
+#life_exp_GAVI = life expectancies by year, age and countries  FROM MONTAGU
+
+#template = output template FROM MONTAGU
+
+#run_id = parameter sample number, for stochastic runs only
+
+output_df = run_burden_for_template(historic_dat,
+                                    GAVI_preventive,
+                                    GAVI_switch,
+                                    param_samples,
+                                    pop_all,
+                                    P_severe,
+                                    P_severeDeath,
+                                    life_exp_GAVI,
+                                    template,
+                                    run_id = NA)
 ```
