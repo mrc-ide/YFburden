@@ -1,8 +1,8 @@
-#' calculates the number of deaths and DALYS
+#' calculates the number of deaths and cases
 #'
 #' @param new_infections number of infections
 #' @param P_severe probability of severe infection
-#' @param P_severeDeath probability od dying if severe
+#' @param P_severeDeath probability of dying if severe
 #'
 #' @return the numbers of cases and deaths
 #'

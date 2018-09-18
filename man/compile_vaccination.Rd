@@ -17,7 +17,6 @@ compile_vaccination(historic_dat, GAVI_preventive, WUENIC, GAVI_switch)
 }
 \value{
 Vaccination activities for one GAVI switch scenario from 1940 to 2100
-compile_vaccination()
 }
 \description{
 Compile vaccination coverages into one df

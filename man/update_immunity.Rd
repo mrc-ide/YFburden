@@ -11,7 +11,6 @@ update_immunity(immunity)
 }
 \value{
 New immunity profile by age
-update_immunity()
 }
 \description{
 move on immunity profile through ageing

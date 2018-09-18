@@ -1,18 +1,18 @@
 #' Calculate the number of infections
 #'
-#' @param param_samples transmission intensity in each admin 1 unit
+#' @param param_samples transmission intensity in each admin 1 unit or country
 #' @param coverage_df vaccination coverage
-#' @param pop_all population in al countries by year and age
-#' @param year year of interest
+#' @param pop_all population in all countries by year and age
+#' @param years years of interest
 #' @param age_max maximum age in output so age range is [0, age_max]
 #' @return The number of infections in each country in each year of interest
-#' fun_calcInfections()
+#'
 
 calc_infections = function(param_samples,
-                              coverage_df,
-                              pop_all,
-                              years,
-                              age_max){
+                           coverage_df,
+                           pop_all,
+                           years,
+                           age_max){
 
   #get the number of countries
   countries = unique(pop_all$country_code)

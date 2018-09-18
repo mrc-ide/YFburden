@@ -14,15 +14,14 @@ fun_immunityStart(model_type = "Foi", transmission_param, age_max, pop,
 
 \item{age_max}{maximum age gorup}
 
-\item{pop}{population in country y year and age}
+\item{pop}{population in country by year and age}
 
-\item{old_coverage}{vaccination coverage by age and year}
+\item{old_coverage}{vaccination coverage by year and age}
 
 \item{year_end}{year that we wish to have the immunity profile in}
 }
 \value{
 immunity profile by age in the first year of interest
-fun_immunityStart()
 }
 \description{
 calculate immunity profile at start

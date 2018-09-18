@@ -1,10 +1,10 @@
 #' add vaccination coverage to change immunity profile
-#' 
+#'
 #' @param coverage vaccination campaign coverage
 #' @param age_first youngest age group to be vaccinated
 #' @param age_last oldest age group to be vaccinated
 #' @param immunity current immunity in one year
-#' @param skew skew of vaccination. defaults to 0 where vaccination is random
+#' @param skew skew of vaccination. Defaults to 0 where vaccination is random
 #' @return The immunity profile by age in one year
 #' add_vaccination()
 
@@ -14,7 +14,7 @@ add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
         skew = 0
     }
     coverage = pmin(coverage, 1)  #check that it is at most 1
-    
+
     ## immunity is the age distribution of immunity at the time point in question.  this adds vaccination as if the skew = 0
     if (skew == 0) {
         if (age_first != age_last) {

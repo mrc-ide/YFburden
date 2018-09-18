@@ -8,7 +8,7 @@
 #' @param coverage vaccination coverage by campaign in country
 #' @param immunityStart immunity profile at the beginning of simulation
 #' @return The immunity profile by age and number of infections in one year
-#' run_infections_unit()
+#'
 
 run_infections_unit = function(model_type = "Foi",
                                transmission_param,

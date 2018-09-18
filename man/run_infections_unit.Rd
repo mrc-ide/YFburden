@@ -24,7 +24,6 @@ run_infections_unit(model_type = "Foi", transmission_param, years,
 }
 \value{
 The immunity profile by age and number of infections in one year
-run_infections_unit()
 }
 \description{
 calculate the number of infections in a country for the years specified

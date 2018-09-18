@@ -15,7 +15,7 @@ add_vaccination(coverage, age_first, age_last, immunity, skew = 0)
 
 \item{immunity}{current immunity in one year}
 
-\item{skew}{skew of vaccination. defaults to 0 where vaccination is random}
+\item{skew}{skew of vaccination. Defaults to 0 where vaccination is random}
 }
 \value{
 The immunity profile by age in one year
