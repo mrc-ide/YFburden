@@ -5,7 +5,8 @@
 #' @param pop_all population in all countries by year and age
 #' @param years years of interest
 #' @param age_max maximum age in output so age range is [0, age_max]
-#' @return The number of infections in each country in each year of interest
+#' @return The number of infections in each country in each year of interest AND
+#'         cohort size in each country in each year of interest
 #'
 
 calc_infections = function(param_samples,
@@ -22,6 +23,9 @@ calc_infections = function(param_samples,
   #declare outputs
   infections = rep(NA, length(years)*length(ages)*n_countries)
   dim(infections) = c(length(years), length(ages), n_countries)
+
+  cohort_size = rep(NA, length(years)*length(ages)*n_countries)
+  dim(cohort_size) = c( length(years), length(ages), n_countries)
 
   for (country_ind in 1: n_countries){
 
@@ -74,14 +78,15 @@ calc_infections = function(param_samples,
 
     infections[ , , country_ind] = out$new_infections
 
+    cohort_size[ , , country_ind] = pop_new[ which( pop_new[,1] %in% years), -1]
 
   }
 
-  dimnames(infections)[[1]] = years
-  dimnames(infections)[[2]] = ages
-  dimnames(infections)[[3]] = countries
+  dimnames(infections)[[1]] = dimnames(cohort_size)[[1]] = years
+  dimnames(infections)[[2]] = dimnames(cohort_size)[[2]] = ages
+  dimnames(infections)[[3]] = dimnames(cohort_size)[[3]] = countries
 
 
-  return(infections)
+  return(list(infections = infections, cohort_size = cohort_size))
 
 }

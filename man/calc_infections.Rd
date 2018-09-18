@@ -18,7 +18,8 @@ calc_infections(param_samples, coverage_df, pop_all, years, age_max)
 \item{age_max}{maximum age in output so age range is [0, age_max]}
 }
 \value{
-The number of infections in each country in each year of interest
+The number of infections in each country in each year of interest AND
+        cohort size in each country in each year of interest
 }
 \description{
 Calculate the number of infections

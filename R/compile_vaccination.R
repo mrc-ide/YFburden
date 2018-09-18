@@ -36,23 +36,24 @@ compile_vaccination = function(historic_dat, GAVI_preventive, WUENIC, GAVI_switc
     }
 
     #########################
+    if(!is.na(WUENIC[1])){
+      ### ADD WUENIC FOR GAB AND GNQ ###
+      missing_countries = c("GAB", "GNQ")
+      WUENIC = dplyr::filter(WUENIC, ISO_code %in% missing_countries)
 
-    ### ADD WUENIC FOR GAB AND GNQ ###
-    missing_countries = c("GAB", "GNQ")
-    WUENIC = dplyr::filter(WUENIC, ISO_code %in% missing_countries)
 
-
-    for (c in missing_countries) {
+      for (c in missing_countries) {
         WUENIC_subset = dplyr::filter(WUENIC, ISO_code == c)
         for (y in 1980:2016) {
-            if (!is.na(WUENIC_subset[paste0("X", y)])) {
-                tmp = data.frame(scenario = "yf-WUENIC", set_name = "YF, with, WUENIC", vaccine = "YF", gavi_support = "none", activity_type = "routine", country_code = c,
-                  country = WUENIC_subset$Cname, year = y, age_first = 0, age_last = 0, age_range_verbatim = "<NA>", target = NA, coverage = as.numeric(WUENIC_subset[paste0("X",
-                    y)])/100, skew = NA)
+          if (!is.na(WUENIC_subset[paste0("X", y)])) {
+            tmp = data.frame(scenario = "yf-WUENIC", set_name = "YF, with, WUENIC", vaccine = "YF", gavi_support = "none", activity_type = "routine", country_code = c,
+                             country = WUENIC_subset$Cname, year = y, age_first = 0, age_last = 0, age_range_verbatim = "<NA>", target = NA, coverage = as.numeric(WUENIC_subset[paste0("X",
+                                                                                                                                                                                        y)])/100, skew = NA)
 
-                historic_dat = rbind(historic_dat, tmp)
-            }
+            historic_dat = rbind(historic_dat, tmp)
+          }
         }
+      }
     }
 
     vacc_dat = historic_dat[order(historic_dat$year), ]
