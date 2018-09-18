@@ -18,8 +18,6 @@ devtools::install_github("mrc-ide/YFburden")
 Example
 -------
 
-This is a basic example which shows you how to solve a common problem:
-
 ``` r
 #historic_dat = vaccination campaigns before 2000 (pre-GAVI)
 
