@@ -1,0 +1,122 @@
+---
+title: "YFburden"
+author: "Katy Gaythorpe"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+#Introduction
+
+This vignette describes how to use the YFburden package which hinges on data in the form supplied by Montagu as part of the Vaccine Impact Modelling Consortium. This package also depends on historical vaccination data and estimates of the transmission intensity across the African endemic region. 
+
+If you have access to Montagu, the historical vaccination data and transmission intensity estimates, this package will calculate the burden of Yellow Fever in GAVI-eligible countries across Africa. The burden is in the form of deaths, number of severe infections or cases and DALYs or disability-adjusted-life-years. 
+
+
+#Method
+
+## Import data
+
+From Montagu, you will need:
+
+* Burden estimate templates
+
+* Population sizes by age, year and country for both genders (interpolated 1 year time and age) in long format
+
+* Coverage data
+
+* Remaining life years by age, year and country in long format
+
+From Katy, or the Imperial YF group, you will need:
+
+* Transmission intensity estimates either at adm1 level or country level
+
+* Historic vaccination coverage data (this is at country level)
+
+## Burden for template
+
+If you just wish for a data frame of everything for each country and year in a template .csv then run the following:
+
+```{r main, eval = FALSE}
+output_df = run_burden_for_template(historic_dat,
+                                    GAVI_preventive,
+                                    GAVI_switch,
+                                    param_samples,
+                                    pop_all,
+                                    P_severe,
+                                    P_severeDeath,
+                                    life_exp_GAVI,
+                                    template,
+                                    run_id = NA)
+
+```
+which runs all the functions in "step by step" and saves them in the format of the template file. This works for one set of the input parameters so would need to be run separately for each run of the stochastic estimates.
+
+## Step by step
+
+Use these steps if you do not need the estimates in a template format or you are only interested in one thing eg. cases.
+
+1. Compile coverage data from historic campaigns and the GAVI projected activities taken from Montagu
+
+    `coverage_df =  compile_vaccination(historic_dat, GAVI_preventive, WUENIC, GAVI_switch)`
+
+    In this, `historic_dat` is the historic vaccination information, provided at country level. `GAVI_preventive` is the Montagu coverage data that includes     *all* activities and `WUENIC` is additional WUENIC data used if you want to extend to non-GAVI-eligible countries such as Equatorial Guinea and the           Gambia. Finally, `GAVI_switch` details which scenario you wish to examine; it is either `"routine"`, `"no-vaccination"` or `"preventive"` which dictates     which entries from the Montagu-supplied vaccination data are included in `coverage_df`.
+
+2. Calculate the number of infections and cohort size in the years of interest.
+
+    ```{r inf, eval = FALSE}
+    out1 = calc_infections(param_samples, coverage_df, pop_all, year = 2010:2015, age_max = 100)
+    
+    infections = out1$infections
+    cohort_size = out1$cohort_size 
+    ```
+    
+    The `cohort_size` is just the population size in a handy format; a 3d array with dimensions years x ages x countries. 
+    
+    In order to calculate the infections, the function first calls `fun_immunityStart` to get the immunity profile at the beginning of the time periord of       interest (2010 in this case); this function simulates from the introduction of vaccination (1940) to the start year to take into account the previous        vaccination activities. 
+    
+    `calc_infections` then calls `run_infections_unit` which calculates infections in one country. This calls several functions to add vaccination or age       the population but it relies a `generate_infections` function which can either be from the Garske et al. force of infection model (default) or from the     Jean et al. R0 model. The `generate_infections` functions calculate the number of new infections in one year and country. The final outputs are both 3d     arrays.
+    
+3.  Calculate the number of cases and deaths.
+
+    ```{r cases, eval = FALSE}
+    P_severe = 0.12
+    P_severeDeath = 0.47
+    
+    out2 = calc_cases_and_deaths(infections, P_severe, P_severeDeath)
+    
+    cases = out2$cases
+    deaths = out2$deaths
+    ```
+    
+    This is just a multiplication of the infection array by the probabilities.  
+
+4. Calculate the DALYs.
+
+    ```{r dalys, eval = FALSE}
+    #DEFAULT VALUES
+    d_acute = 17.8 / 365 #report
+    dw_acute = 0.172
+    d_conv = 28 / 365
+    dw_conv = 0.024
+    
+    DALYs = calc_DALYs(cases, deaths, life_exp_GAVI, P_severe,
+                       d_acute, dw_acute, d_conv, dw_conv) # these could be omitted as they have defaults
+    ```
+
+    The `calc_DALYs` function first reformats the life expectancies using `reformat_life_expectancies` so that it is also in a 3d array with dimensions     years x ages x countries.
+    
+    The DALY calculation is then $\text{DALYs} = \text{YLL} + \text{YLD}$ where $\text{YLL} = \text{deaths} \times \text{life expectancy}$ and 
+    \begin{equation}
+    \text{YLD} = \text{cases} \times (d_{acute}\times dw_{acute} + (1 - P_{severe}) \times d_{conv} \times dw_{conv}).
+    \end{equation}
