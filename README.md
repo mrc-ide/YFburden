@@ -11,8 +11,9 @@ Installation
 You can install YFburden from github with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("mrc-ide/YFburden")
+# install.packages("drat")
+drat:::add("mrc-ide")
+install.packages("YFburden")
 ```
 
 Example
