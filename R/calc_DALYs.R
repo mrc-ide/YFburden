@@ -1,10 +1,14 @@
 #' get life expectancies in array form
 #'
 #' @param life_exp_GAVI life expectanices from Montagu
+#' @param years years on interest
+#' @param ages ages of interest
 #'
 #' @return life expectancies in form years x ages x countries
 #'
-reformat_life_expectancies = function(life_exp_GAVI, years, ages){
+reformat_life_expectancies = function(life_exp_GAVI,
+                                      years,
+                                      ages){
 
   years_le = min(life_exp_GAVI$year) : (max(life_exp_GAVI$year) + 5)
 
@@ -20,8 +24,9 @@ reformat_life_expectancies = function(life_exp_GAVI, years, ages){
 
       life_exp[((y_ind-1)*5): (y_ind*5),
                unique(life_exp_GAVI$age_from)[a_ind] : unique(life_exp_GAVI$age_to)[a_ind], ] =
-        dplyr::filter(life_exp_GAVI, year == unique(life_exp_GAVI$year)[y_ind] &
-                        age_from == unique(life_exp_GAVI$age_from)[a_ind])$value
+        dplyr::filter(life_exp_GAVI,
+                      year == unique(life_exp_GAVI$year)[y_ind] &
+                      age_from == unique(life_exp_GAVI$age_from)[a_ind])$value
 
     }
   }

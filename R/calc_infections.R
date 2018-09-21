@@ -5,6 +5,7 @@
 #' @param pop_all population in all countries by year and age
 #' @param years years of interest
 #' @param age_max maximum age in output so age range is [0, age_max]
+#'
 #' @return The number of infections in each country in each year of interest AND
 #'         cohort size in each country in each year of interest
 #'
@@ -27,7 +28,7 @@ calc_infections = function(param_samples,
   cohort_size = rep(NA, length(years)*length(ages)*n_countries)
   dim(cohort_size) = c( length(years), length(ages), n_countries)
 
-  for (country_ind in 1: n_countries){
+  for (country_ind in 1 : n_countries){
 
     #get coverage for that country
     coverage_country = dplyr::filter(coverage_df, country_code == countries[country_ind])
@@ -56,7 +57,6 @@ calc_infections = function(param_samples,
 
     #average over country
     param_country_ave = mean( as.numeric(param_country) )
-
 
     #calculate start conditions
     immunity_start = fun_immunityStart(model_type,

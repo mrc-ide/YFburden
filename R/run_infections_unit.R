@@ -23,6 +23,7 @@ update_immunity = function(immunity) {
 #' @param age_last oldest age group to be vaccinated
 #' @param immunity current immunity in one year
 #' @param skew skew of vaccination. Defaults to 0 where vaccination is random
+#'
 #' @return The immunity profile by age in one year
 #' add_vaccination()
 
@@ -36,13 +37,16 @@ add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
   ## immunity is the age distribution of immunity at the time point in question.  this adds vaccination as if the skew = 0
   if (skew == 0) {
     if (age_first != age_last) {
-      immunity[paste0(age_first):paste0(age_last)] = 1 - (1 - coverage) * (1 - immunity[paste0(age_first):paste0(age_last)])
+      immunity[paste0(age_first):paste0(age_last)] = 1 - (1 - coverage) *
+                                                     (1 - immunity[paste0(age_first):paste0(age_last)])
     } else {
       immunity[paste0(age_first)] = 1 - (1 - coverage) * (1 - immunity[paste0(age_first)])
     }
   } else if (skew == -1) {
     if (age_first != age_last) {
-      immunity[paste0(age_first):paste0(age_last)] = pmin(1, coverage + immunity[paste0(age_first):paste0(age_last)])
+      immunity[paste0(age_first):paste0(age_last)] = pmin(1,
+                                                          coverage +
+                                                            immunity[paste0(age_first):paste0(age_last)])
     } else {
       immunity[paste0(age_first)] = pmin(1, coverage + immunity[paste0(age_first)])
     }
@@ -63,19 +67,18 @@ add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
 
 generate_infections_R0 = function(R0, pop, immunity) {
 
-
-
   herd_immunity = 1 - (1/R0)
   sus = pop * (1 - immunity)
   prop_sus = sum(sus)/sum(pop)
   prop_to_infect = herd_immunity - (1 - prop_sus)  ## proportion of the population
+
   if (prop_to_infect < 0) {
-    ## don't do any infections.
+    ## no infections.
     new_infect = rep(0, length(pop))
     names(new_infect) = names(pop)
     new_immunity = immunity
   } else {
-    ## put in infections as appropriate, by newly infecting prop_to_infect of each susceptible age category:
+    ## put in infections as appropriate, :
     prop_sus_to_infect = prop_to_infect/prop_sus
     new_infect = sus * prop_sus_to_infect
     new_immunity = (pop - sus + new_infect)/pop
@@ -102,13 +105,6 @@ generate_infections_R0 = function(R0, pop, immunity) {
 
 
 generate_infections_static = function(foi, pop, immunity) {
-  ## foi is a scalar
-
-  ## pop and immunity are vectors of length age.max+1, hopefully with ages as names, with pop giving absolute population size, and immunity the proportion immune
-  ## in each age category.
-
-  ## returns vectors new.infections and immunity of the same format as pop and immunity.
-
 
   sus = pop * (1 - immunity)
 
@@ -138,6 +134,7 @@ generate_infections_static = function(foi, pop, immunity) {
 #' @param pop population in countryby year and age
 #' @param coverage vaccination coverage by campaign in country
 #' @param immunityStart immunity profile at the beginning of simulation
+#'
 #' @return The immunity profile by age and number of infections in one year
 #'
 
@@ -173,11 +170,13 @@ run_infections_unit = function(model_type = "Foi",
     }
     ## generate new infections
 
-    tmp = switch(model_type, Foi = generate_infections_static(transmission_param,
-                                                              pop[yearIndex, 2:102],
-                                                              immunity[yearIndex, ]),
-                 R0 = generate_infections_R0(transmission_param,
-                                             pop[yearIndex, 2:102], immunity[yearIndex, ]))
+    tmp = switch(model_type,
+                 "Foi" = generate_infections_static(transmission_param,
+                                                    pop[yearIndex, 2:102],
+                                                    immunity[yearIndex, ]),
+                 "R0" = generate_infections_R0(transmission_param,
+                                               pop[yearIndex, 2:102],
+                                               immunity[yearIndex, ]))
 
     new_infections[yearIndex, ] = tmp$new_infections
     immunity[yearIndex, ] = tmp$immunity

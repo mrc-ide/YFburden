@@ -48,7 +48,9 @@ run_burden_for_template = function(historic_dat,
   deaths = out2$deaths
 
   ### step 4: DALYS ### ------------------------------------------------------------------------------
-  DALYs = calc_DALYs(cases[, , 1:32], deaths[, , 1:32], life_exp_GAVI, P_severe)
+  DALYs = calc_DALYs(cases[, , 1:32], deaths[, , 1:32], life_exp_GAVI, P_severe) #32 hardcoded as this
+                                                                                 #GAVI eligible
+                                                                                 #countries
 
   ### step 5: template ### ---------------------------------------------------------------------------
   output_df = NULL
@@ -61,12 +63,18 @@ run_burden_for_template = function(historic_dat,
                                                run_id =  rep(run_id, length(years)),
                                                year = years,
                                                age = rep(ages[ageIndex], length(years)),
-                                               country = rep(countries[countryIndex], length(years)),
-                                               country_name = rep(country_names[countryIndex], length(years)),
-                                               cohort_size = cohort_size[, paste0(ages[ageIndex]), paste0(countries[countryIndex])],
-                                               deaths = deaths[, paste0(ages[ageIndex]), paste0(countries[countryIndex])],
-                                               cases = cases[, paste0(ages[ageIndex]), paste0(countries[countryIndex])] ,
-                                               dalys = DALYs[, paste0(ages[ageIndex]), paste0(countries[countryIndex]) ]) )
+                                               country = rep(countries[countryIndex],
+                                                             length(years)),
+                                               country_name = rep(country_names[countryIndex],
+                                                                  length(years)),
+                                               cohort_size = cohort_size[, paste0(ages[ageIndex]),
+                                                                         paste0(countries[countryIndex])],
+                                               deaths = deaths[, paste0(ages[ageIndex]),
+                                                               paste0(countries[countryIndex])],
+                                               cases = cases[, paste0(ages[ageIndex]),
+                                                             paste0(countries[countryIndex])],
+                                               dalys = DALYs[, paste0(ages[ageIndex]),
+                                                             paste0(countries[countryIndex]) ]) )
     }
   }
 
