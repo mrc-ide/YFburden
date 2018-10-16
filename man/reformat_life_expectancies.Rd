@@ -8,6 +8,10 @@ reformat_life_expectancies(life_exp_GAVI, years, ages)
 }
 \arguments{
 \item{life_exp_GAVI}{life expectanices from Montagu}
+
+\item{years}{years on interest}
+
+\item{ages}{ages of interest}
 }
 \value{
 life expectancies in form years x ages x countries

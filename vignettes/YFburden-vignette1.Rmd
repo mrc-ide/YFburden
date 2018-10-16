@@ -57,6 +57,7 @@ output_df = run_burden_for_template(historic_dat,
                                     P_severeDeath,
                                     life_exp_GAVI,
                                     template,
+                                    round = TRUE,
                                     run_id = NA)
 
 ```

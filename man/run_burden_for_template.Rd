@@ -6,7 +6,7 @@
 \usage{
 run_burden_for_template(historic_dat, GAVI_preventive, GAVI_switch,
   param_samples, pop_all, P_severe, P_severeDeath, life_exp_GAVI, template,
-  run_id = NA)
+  round = TRUE, run_id = NA)
 }
 \arguments{
 \item{historic_dat}{= Historic vaccination coverages}
@@ -26,6 +26,8 @@ run_burden_for_template(historic_dat, GAVI_preventive, GAVI_switch,
 \item{life_exp_GAVI}{life expectancies from Montagu}
 
 \item{template}{output template}
+
+\item{round}{whether to round the output to save memory}
 
 \item{run_id}{run_id for stochastic runs. Defaults to NA}
 }

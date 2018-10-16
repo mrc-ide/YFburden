@@ -9,6 +9,7 @@
 #' @param P_severeDeath probability of dying if severe
 #' @param life_exp_GAVI life expectancies from Montagu
 #' @param template output template
+#' @param round whether to round the output to save memory
 #' @param run_id run_id for stochastic runs. Defaults to NA
 #'
 run_burden_for_template = function(historic_dat,
@@ -20,6 +21,7 @@ run_burden_for_template = function(historic_dat,
                                    P_severeDeath,
                                    life_exp_GAVI,
                                    template,
+                                   round = TRUE,
                                    run_id = NA){
   ## get info from template ##
   years = unique(template$year)
@@ -80,7 +82,9 @@ run_burden_for_template = function(historic_dat,
 
 
   # rounding #
-  output_df[,c("deaths","cases","dalys")] = round(output_df [,c("deaths","cases","dalys")])
+  if(round){
+    output_df[,c("deaths","cases","dalys")] = round(output_df [,c("deaths","cases","dalys")])
+  }
 
   return(output_df)
 }
