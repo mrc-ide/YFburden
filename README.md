@@ -38,6 +38,8 @@ Example
 
 #template = output template FROM MONTAGU
 
+#round = whether to round or not
+
 #run_id = parameter sample number, for stochastic runs only
 
 output_df = run_burden_for_template(historic_dat,
@@ -49,6 +51,7 @@ output_df = run_burden_for_template(historic_dat,
                                     P_severeDeath,
                                     life_exp_GAVI,
                                     template,
+                                    round = TRUE,
                                     run_id = NA)
 ```
 
