@@ -34,7 +34,7 @@ add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
   }
   coverage = pmin(coverage, 1)  #check that it is at most 1
 
-  ## immunity is the age distribution of immunity at the time point in question.  this adds vaccination as if the skew = 0
+  ## immunity is the age distribution of immunity at the time point in question.
   if (skew == 0) {
     if (age_first != age_last) {
       immunity[paste0(age_first):paste0(age_last)] = 1 - (1 - coverage) *
@@ -172,10 +172,10 @@ run_infections_unit = function(model_type = "Foi",
 
     tmp = switch(model_type,
                  "Foi" = generate_infections_static(transmission_param,
-                                                    pop[yearIndex, 2:102],
+                                                    pop[which( pop_new[,1] %in% years[yearIndex]), 2:102],
                                                     immunity[yearIndex, ]),
                  "R0" = generate_infections_R0(transmission_param,
-                                               pop[yearIndex, 2:102],
+                                               pop[which( pop_new[,1] %in% years[yearIndex]), 2:102],
                                                immunity[yearIndex, ]))
 
     new_infections[yearIndex, ] = tmp$new_infections
@@ -192,8 +192,8 @@ run_infections_unit = function(model_type = "Foi",
           immunity[yearIndex, ] = add_vaccination(coverage$coverage[y],
                                                   age_first = coverage$age_first[y],
                                                   age_last = coverage$age_last[y],
-                                                  immunity[yearIndex,
-                                                           ], skew = coverage$skew[y])
+                                                  immunity[yearIndex,],
+                                                  skew = coverage$skew[y])
         }
       }
 

@@ -48,9 +48,7 @@ run_burden_for_template = function(historic_dat,
   deaths = out2$deaths
 
   ### step 4: DALYS ### ------------------------------------------------------------------------------
-  DALYs = calc_DALYs(cases[, , 1:32], deaths[, , 1:32], life_exp_GAVI, P_severe) #32 hardcoded as this
-                                                                                 #GAVI eligible
-                                                                                 #countries
+  DALYs = calc_DALYs(cases[, , 1:length(countries)], deaths[, , 1:length(countries)], life_exp_GAVI, P_severe)
 
   ### step 5: template ### ---------------------------------------------------------------------------
   output_df = NULL

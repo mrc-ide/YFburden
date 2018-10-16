@@ -99,7 +99,7 @@ fun_immunityStart = function(model_type = "Foi",
     immunityStart = 1 - (exp(-foi * ages))
 
     # then years are from 1940 to year_end
-    years = c(year_start:year_end - 1)
+    years = c(year_start:(year_end - 1))
 
 
     out = run_infections_unit(model_type,
