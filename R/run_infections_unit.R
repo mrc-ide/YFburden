@@ -172,10 +172,10 @@ run_infections_unit = function(model_type = "Foi",
 
     tmp = switch(model_type,
                  "Foi" = generate_infections_static(transmission_param,
-                                                    pop[which( pop_new[,1] %in% years[yearIndex]), 2:102],
+                                                    pop[which( pop[,1] %in% years[yearIndex]), 2:102],
                                                     immunity[yearIndex, ]),
                  "R0" = generate_infections_R0(transmission_param,
-                                               pop[which( pop_new[,1] %in% years[yearIndex]), 2:102],
+                                               pop[which( pop[,1] %in% years[yearIndex]), 2:102],
                                                immunity[yearIndex, ]))
 
     new_infections[yearIndex, ] = tmp$new_infections
