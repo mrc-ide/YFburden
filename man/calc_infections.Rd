@@ -4,7 +4,8 @@
 \alias{calc_infections}
 \title{Calculate the number of infections}
 \usage{
-calc_infections(param_samples, coverage_df, pop_all, years, age_max)
+calc_infections(param_samples, coverage_df, pop_all, years, age_max,
+  model_type = "Foi")
 }
 \arguments{
 \item{param_samples}{transmission intensity in each admin 1 unit or country}
@@ -16,6 +17,8 @@ calc_infections(param_samples, coverage_df, pop_all, years, age_max)
 \item{years}{years of interest}
 
 \item{age_max}{maximum age in output so age range is [0, age_max]}
+
+\item{model_type}{whether "Foi" or "R0". Defaults to "Foi".}
 }
 \value{
 The number of infections in each country in each year of interest AND
