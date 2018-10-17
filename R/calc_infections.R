@@ -5,6 +5,7 @@
 #' @param pop_all population in all countries by year and age
 #' @param years years of interest
 #' @param age_max maximum age in output so age range is [0, age_max]
+#' @param model_type whether "Foi" or "R0". Defaults to "Foi".
 #'
 #' @return The number of infections in each country in each year of interest AND
 #'         cohort size in each country in each year of interest
@@ -14,7 +15,8 @@ calc_infections = function(param_samples,
                            coverage_df,
                            pop_all,
                            years,
-                           age_max){
+                           age_max,
+                           model_type = "Foi"){
 
   #get the number of countries
   countries = unique(pop_all$country_code)
@@ -48,9 +50,6 @@ calc_infections = function(param_samples,
     pop_new = pop_new[order(pop_new[,1]),]
     ############################################
 
-
-    #get model type
-    model_type = "Foi"
 
     #collect transmission param for that country
     param_country = param_samples[ grep(countries[country_ind], names(param_samples)) ]
