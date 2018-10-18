@@ -33,7 +33,6 @@ run_burden_for_template(historic_dat, GAVI_preventive, GAVI_switch,
 }
 \value{
 output_df output in template format
- @export
 }
 \description{
 run burden steps and put into a template
