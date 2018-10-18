@@ -5,7 +5,7 @@
 #' @param ages ages of interest
 #'
 #' @return life expectancies in form years x ages x countries
-#'
+#' @export
 reformat_life_expectancies = function(life_exp_GAVI,
                                       years,
                                       ages){
@@ -55,7 +55,7 @@ reformat_life_expectancies = function(life_exp_GAVI,
 #' @param dw_conv disability weight if convalescent. Default = 0.024.
 #'
 #' @return DALYs by year, age and countries
-#'
+#' @export
 calc_DALYs = function(cases,
                       deaths,
                       life_exp_GAVI,
