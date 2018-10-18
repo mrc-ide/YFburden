@@ -2,7 +2,7 @@
 #'
 #' @param immunity current immunity profile
 #' @return New immunity profile by age
-#'
+#' @export
 
 update_immunity = function(immunity) {
   ## takes the proportion of immune people in each age class should be a vector, of length n.ages.
@@ -25,7 +25,7 @@ update_immunity = function(immunity) {
 #' @param skew skew of vaccination. Defaults to 0 where vaccination is random
 #'
 #' @return The immunity profile by age in one year
-#' add_vaccination()
+#'  @export
 
 add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
   ## year is the year of vaccination of the new birth cohort.
@@ -63,7 +63,7 @@ add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
 #' @param pop population by age in one year
 #' @param immunity current immunity profile by age in one year
 #' @return The number of new infections in one year and the immunity profile by age in one year
-#' generate_infections_R0()
+#'  @export
 
 generate_infections_R0 = function(R0, pop, immunity) {
 
@@ -101,7 +101,7 @@ generate_infections_R0 = function(R0, pop, immunity) {
 #' @param pop population by age in one year
 #' @param immunity current immunity profile by age in one year
 #' @return The immunity profile by age in one year and the number of infections for that year
-#' generate_infections_static()
+#'  @export
 
 
 generate_infections_static = function(foi, pop, immunity) {
@@ -136,7 +136,7 @@ generate_infections_static = function(foi, pop, immunity) {
 #' @param immunityStart immunity profile at the beginning of simulation
 #'
 #' @return The immunity profile by age and number of infections in one year
-#'
+#' @export
 
 run_infections_unit = function(model_type = "Foi",
                                transmission_param,

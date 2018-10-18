@@ -15,7 +15,7 @@ generate_infections_R0(R0, pop, immunity)
 }
 \value{
 The number of new infections in one year and the immunity profile by age in one year
-generate_infections_R0()
+ @export
 }
 \description{
 calculate the number of infections in a year for all age groups in R0 model

@@ -9,7 +9,7 @@
 #'
 #' @return The number of infections in each country in each year of interest AND
 #'         cohort size in each country in each year of interest
-#'
+#' @export
 
 calc_infections = function(param_samples,
                            coverage_df,

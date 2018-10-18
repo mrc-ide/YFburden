@@ -17,7 +17,6 @@ foi_prevac(adm, R0, pop_moments, polydeg = 6)
 }
 \value{
 The force of infection before vaccination in the admin or admins specified
-foi_prevac()
 }
 \description{
 calculate foi before vaccination starts for R0 model

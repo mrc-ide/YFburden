@@ -5,7 +5,7 @@
 #' @param P_severeDeath probability of dying if severe
 #'
 #' @return the numbers of cases and deaths
-#'
+#' @export
 calc_cases_and_deaths = function(new_infections, P_severe, P_severeDeath){
 
   # calculate proportion of infections that are severe

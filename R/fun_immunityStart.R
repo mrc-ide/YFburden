@@ -5,7 +5,7 @@
 #' @param pop_moments population moments
 #' @param polydeg degree of polynomial. Defaults to 6
 #' @return The force of infection before vaccination in the admin or admins specified
-#' foi_prevac()
+#' @export
 
 foi_prevac = function(adm,
                       R0,
@@ -56,7 +56,7 @@ foi_prevac = function(adm,
 #' @param year_end year that we wish to have the immunity profile in
 #'
 #' @return immunity profile by age in the first year of interest
-#'
+#' @export
 
 fun_immunityStart = function(model_type = "Foi",
                              transmission_param,

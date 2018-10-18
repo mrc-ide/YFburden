@@ -6,7 +6,7 @@
 #' @param GAVI_switch which vaccination activity to compile
 #'
 #' @return Vaccination activities for one GAVI switch scenario from 1940 to 2100
-#'
+#' @export
 
 
 compile_vaccination = function(historic_dat,
