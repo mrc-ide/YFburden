@@ -13,7 +13,7 @@
 #' @param run_id run_id for stochastic runs. Defaults to NA
 #'
 #' @return output_df output in template format
-#'  @export
+#' @export
 run_burden_for_template = function(historic_dat,
                                    GAVI_preventive,
                                    GAVI_switch,
