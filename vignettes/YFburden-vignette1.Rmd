@@ -84,9 +84,9 @@ Use these steps if you do not need the estimates in a template format or you are
     
     The `cohort_size` is just the population size in a handy format; a 3d array with dimensions years x ages x countries. 
     
-    In order to calculate the infections, the function first calls `fun_immunityStart` to get the immunity profile at the beginning of the time periord of       interest (2010 in this case); this function simulates from the introduction of vaccination (1940) to the start year to take into account the previous        vaccination activities. 
+    In order to calculate the infections, the function first calls `fun_immunityStart` to get the immunity profile at the beginning of the time period, 1939. 
     
-    `calc_infections` then calls `run_infections_unit` which calculates infections in one country. This calls several functions to add vaccination or age       the population but it relies a `generate_infections` function which can either be from the Garske et al. force of infection model (default) or from the     Jean et al. R0 model. The `generate_infections` functions calculate the number of new infections in one year and country. The final outputs are both 3d     arrays.
+    `calc_infections` then calls `run_infections_unit` which calculates infections in one country. This calls several functions to add vaccination or age the population but it relies a `generate_infections` function which can either be from the Garske et al. force of infection model (default) or from the Jean et al. R0 model. The `generate_infections` functions calculate the number of new infections in one year and country. `calc_infections` simulates from 1940 to the end of the time period of interest and then only outputs the infections and cohort_size for the years of interest. The final outputs are both 3d arrays.
     
 3.  Calculate the number of cases and deaths.
 
