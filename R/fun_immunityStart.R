@@ -65,8 +65,10 @@ fun_immunityStart = function(model_type = "Foi",
                              old_coverage,
                              year_end) {
 
+  if(year_end < 1940){ stop("Only possible to simulate from 1940 onwards.")}
+
     ages = c(0:age_max)
-    year_start = 1940
+    year_start = 1939
 
     # for R0 need the force of infection before vaccination
     if (model_type == "R0") {

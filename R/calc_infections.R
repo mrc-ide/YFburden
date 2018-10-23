@@ -50,6 +50,19 @@ calc_infections = function(param_samples,
     pop_new = pop_new[order(pop_new[,1]),]
     ############################################
 
+    ##### FOR CAMPAIGN USE DOSES RATHER THAN COVERAGE #####
+    if (!is.null(length(coverage_country[coverage_country$activity_type == "campaign" &
+                                         coverage_country$target > 0, "coverage"]))) {
+
+      coverage_country[coverage_country$activity_type == "campaign" &
+                         coverage_country$target > 0, "coverage"] =
+        as.numeric(coverage_country[coverage_country$activity_type == "campaign" &
+                                      coverage_country$target > 0, "target"]) /
+        rowSums(pop_new[match(coverage_country[coverage_country$activity_type == "campaign" &
+                                                 coverage_country$target > 0, "year"], pop_new[,1]), ,
+                        drop = FALSE])
+
+    }
 
     #collect transmission param for that country
     param_country = param_samples[ grep(countries[country_ind], names(param_samples)) ]
@@ -58,15 +71,15 @@ calc_infections = function(param_samples,
     param_country_ave = mean( as.numeric(param_country) )
 
     #calculate start conditions
-    immunity_start = fun_immunityStart(model_type,
+    immunity_start = fun_immunityStart(model_type = model_type,
                                        transmission_param = param_country_ave,
                                        age_max = age_max,
                                        pop = pop_new,
                                        old_coverage = coverage_country,
-                                       years[1])
+                                       year_end = years[1])
 
     #calculate burden in year of interest
-    out = run_infections_unit(model_type,
+    out = run_infections_unit(model_type = model_type,
                               transmission_param = param_country_ave,
                               years = years,
                               age_max = age_max,

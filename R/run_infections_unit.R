@@ -38,15 +38,14 @@ add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
   if (skew == 0) {
     if (age_first != age_last) {
       immunity[paste0(age_first):paste0(age_last)] = 1 - (1 - coverage) *
-                                                     (1 - immunity[paste0(age_first):paste0(age_last)])
+        (1 - immunity[paste0(age_first):paste0(age_last)])
     } else {
       immunity[paste0(age_first)] = 1 - (1 - coverage) * (1 - immunity[paste0(age_first)])
     }
   } else if (skew == -1) {
     if (age_first != age_last) {
-      immunity[paste0(age_first):paste0(age_last)] = pmin(1,
-                                                          coverage +
-                                                            immunity[paste0(age_first):paste0(age_last)])
+      immunity[paste0(age_first:age_last)] = pmin(1, coverage +
+                                                            immunity[paste0(age_first:age_last)])
     } else {
       immunity[paste0(age_first)] = pmin(1, coverage + immunity[paste0(age_first)])
     }
@@ -63,7 +62,7 @@ add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
 #' @param pop population by age in one year
 #' @param immunity current immunity profile by age in one year
 #' @return The number of new infections in one year and the immunity profile by age in one year
-#'  @export
+#' @export
 
 generate_infections_R0 = function(R0, pop, immunity) {
 
@@ -101,7 +100,7 @@ generate_infections_R0 = function(R0, pop, immunity) {
 #' @param pop population by age in one year
 #' @param immunity current immunity profile by age in one year
 #' @return The immunity profile by age in one year and the number of infections for that year
-#'  @export
+#' @export
 
 
 generate_infections_static = function(foi, pop, immunity) {
@@ -164,10 +163,12 @@ run_infections_unit = function(model_type = "Foi",
 
   # iterate over the years
   for (yearIndex in 1:(n_years)) {
+
     if (yearIndex > 1) {
       ## update immunity:
       immunity[yearIndex, ] = update_immunity(immunity[yearIndex - 1, ])
     }
+
     ## generate new infections
 
     tmp = switch(model_type,
@@ -189,11 +190,12 @@ run_infections_unit = function(model_type = "Foi",
     if (nrow(coverage) > 0)
       for (y in 1:nrow(coverage)) {
         if (coverage$year[y] == years[yearIndex]) {
+
           immunity[yearIndex, ] = add_vaccination(coverage$coverage[y],
                                                   age_first = coverage$age_first[y],
                                                   age_last = coverage$age_last[y],
                                                   immunity[yearIndex,],
-                                                  skew = coverage$skew[y])
+                                                  skew = 0)#coverage$skew[y])
         }
       }
 
