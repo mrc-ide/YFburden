@@ -4,7 +4,7 @@
 \alias{run_infections_unit}
 \title{calculate the number of infections in a country for the years specified}
 \usage{
-run_infections_unit(model_type = "Foi", transmission_param, years,
+run_infections_unit(model_type = "Foi", transmission_param, years_in,
   age_max, pop, coverage, immunityStart)
 }
 \arguments{
@@ -12,7 +12,7 @@ run_infections_unit(model_type = "Foi", transmission_param, years,
 
 \item{transmission_param}{transmission intensity in that country}
 
-\item{years}{years of interest}
+\item{years_in}{years of interest}
 
 \item{age_max}{maximum age group}
 

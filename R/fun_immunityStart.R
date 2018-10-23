@@ -100,19 +100,19 @@ fun_immunityStart = function(model_type = "Foi",
 
     immunityStart = 1 - (exp(-foi * ages))
 
-    # then years are from 1940 to year_end
-    years = c(year_start:(year_end - 1))
+    # # then years are from 1940 to year_end
+    # years = c(year_start:(year_end - 1))
+    #
+    #
+    # out = run_infections_unit(model_type,
+    #                           transmission_param,
+    #                           years,
+    #                           age_max,
+    #                           pop,
+    #                           old_coverage,
+    #                           immunityStart)
+    #
+    # immunityOut = out$immunity[nrow(out$immunity), ]  #interested in last immunity only
 
-
-    out = run_infections_unit(model_type,
-                              transmission_param,
-                              years,
-                              age_max,
-                              pop,
-                              old_coverage,
-                              immunityStart)
-
-    immunityOut = out$immunity[nrow(out$immunity), ]  #interested in last immunity only
-
-    return(immunityOut)
+    return(immunityStart)
 }

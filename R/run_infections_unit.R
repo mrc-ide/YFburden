@@ -128,7 +128,7 @@ generate_infections_static = function(foi, pop, immunity) {
 #'
 #' @param model_type whether R0 or Foi. Defaults to Foi
 #' @param transmission_param transmission intensity in that country
-#' @param years years of interest
+#' @param years_in years of interest
 #' @param age_max maximum age group
 #' @param pop population in countryby year and age
 #' @param coverage vaccination coverage by campaign in country
@@ -139,11 +139,14 @@ generate_infections_static = function(foi, pop, immunity) {
 
 run_infections_unit = function(model_type = "Foi",
                                transmission_param,
-                               years,
+                               years_in,
                                age_max,
                                pop,
                                coverage,
                                immunityStart) {
+  ### simulate from 1940
+  years = 1940:max(years_in)
+
   ### get rid of NA in pop ###
   pop[is.na(pop)] = 0
   ####
@@ -200,5 +203,10 @@ run_infections_unit = function(model_type = "Foi",
       }
 
   }
+
+  ### only want immunity for years_in
+  immunity = immunity[which(years %in% years_in), ]
+  new_infections = new_infections[which(years %in% years_in), ]
+
   return(list(immunity = immunity, new_infections = new_infections))
 }

@@ -15,7 +15,6 @@ generate_infections_static(foi, pop, immunity)
 }
 \value{
 The immunity profile by age in one year and the number of infections for that year
- @export
 }
 \description{
 calculate the number of infections in a year for all age groups in Foi model
