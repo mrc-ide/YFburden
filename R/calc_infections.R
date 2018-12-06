@@ -21,33 +21,36 @@ calc_infections = function(param_samples,
   #get the number of countries
   countries = unique(pop_all$country_code)
   n_countries = length(countries)
+  n_years = length(years)
   ages = 0:age_max
+  n_ages = length(ages)
 
   #declare outputs
-  infections = rep(NA, length(years)*length(ages)*n_countries)
-  dim(infections) = c(length(years), length(ages), n_countries)
+  infections = rep(NA, n_years*n_ages*n_countries)
+  dim(infections) = c(n_years, n_ages, n_countries)
 
-  cohort_size = rep(NA, length(years)*length(ages)*n_countries)
-  dim(cohort_size) = c( length(years), length(ages), n_countries)
+  cohort_size = rep(NA, n_years*n_ages*n_countries)
+  dim(cohort_size) = c( n_years, n_ages, n_countries)
 
   for (country_ind in 1 : n_countries){
 
     #get coverage for that country
-    coverage_country = dplyr::filter(coverage_df, country_code == countries[country_ind])
+    coverage_country = coverage_df %>% filter( country_code == countries[country_ind])
 
     #population for that country
-    pop_country = dplyr::filter(pop_all, country_code == countries[country_ind])
+    pop_country = pop_all %>% filter( country_code == countries[country_ind])
 
     ### want to reshape into previous format ###
     pop_new = NULL
     for (y in max(pop_country$year) : min(pop_country$year)){
-      tmp = c(y, dplyr::filter(pop_country, year == y)$value)
+      tmp = c(y, pop_country %>% filter( year == y)$value)
 
       if(length(tmp)< 102) {tmp = c(tmp, rep(NA, 102-length(tmp)))}
       pop_new = rbind(pop_new, tmp)
     }
     colnames(pop_new) = c("year", ages)
     pop_new = pop_new[order(pop_new[,1]),]
+
     ############################################
 
     ##### FOR CAMPAIGN USE DOSES RATHER THAN COVERAGE #####
@@ -73,13 +76,12 @@ calc_infections = function(param_samples,
     #average over country
     param_country_ave = mean( as.numeric(param_country) )
 
-    #calculate start conditions
+    #calculate start conditions before vaccination started in 1939
     immunity_start = fun_immunityStart(model_type = model_type,
                                        transmission_param = param_country_ave,
                                        age_max = age_max,
                                        pop = pop_new,
-                                       old_coverage = coverage_country,
-                                       year_end = years[1])
+                                       old_coverage = coverage_country)
 
     #calculate burden in year of interest
     out = run_infections_unit(model_type = model_type,

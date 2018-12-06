@@ -1,6 +1,6 @@
 #' calculate foi before vaccination starts for R0 model
 #'
-#' @param adm admin indeices
+#' @param adm admin indices
 #' @param R0 R0 in admins
 #' @param pop_moments population moments
 #' @param polydeg degree of polynomial. Defaults to 6
@@ -15,7 +15,7 @@ foi_prevac = function(adm,
   lambda = NULL
   if (polydeg > 0) {
     for (deg in 1:polydeg) {
-      if (is.na(max(adm)) == 0) {
+      if (!anyNA(adm)) {
         PM = as.numeric(pop_moments[, deg + 1])
       } else {
         PM = pop_moments[deg]
@@ -35,8 +35,7 @@ foi_prevac = function(adm,
   if (polydeg > 2) {
     out = apply(out, 2, min, na.rm = T)
   }
-  if (is.na(max(adm)) == 0)
-  {
+  if (!anyNA(adm)){
     names(out) = paste("FOI", pop_moments[1], sep = "_")
   }  #NAME IS ATTACHED TO POP_MOMENTS FOR WHOLE
   return(out)
@@ -53,7 +52,6 @@ foi_prevac = function(adm,
 #' @param age_max maximum age gorup
 #' @param pop population in country by year and age
 #' @param old_coverage vaccination coverage by year and age
-#' @param year_end year that we wish to have the immunity profile in
 #'
 #' @return immunity profile by age in the first year of interest
 #' @export
@@ -62,13 +60,10 @@ fun_immunityStart = function(model_type = "Foi",
                              transmission_param,
                              age_max,
                              pop,
-                             old_coverage,
-                             year_end) {
-
-  if(year_end < 1940){ stop("Only possible to simulate from 1940 onwards.")}
+                             old_coverage) {
 
     ages = c(0:age_max)
-    year_start = 1939
+    year_start = 1939 #before vaccination started
 
     # for R0 need the force of infection before vaccination
     if (model_type == "R0") {
@@ -81,13 +76,9 @@ fun_immunityStart = function(model_type = "Foi",
                           sum(pop_start[2:length(pop_start)], na.rm = TRUE)
 
         pop_mom = rep(NA, 6)
-        pop_mom[1] = sum(pop_prop, na.rm = TRUE)
-        pop_mom[2] = sum(pop_prop * ages, na.rm = TRUE)
-        pop_mom[3] = sum(pop_prop * ages * ages, na.rm = TRUE)
-        pop_mom[4] = sum(pop_prop * ages * ages * ages, na.rm = TRUE)
-        pop_mom[5] = sum(pop_prop * ages * ages * ages * ages, na.rm = TRUE)
-        pop_mom[6] = sum(pop_prop * ages * ages * ages * ages * ages, na.rm = TRUE)
-
+        for(i in 1:6){
+          pop_mom[i] = sum(pop_prop * ages^(i-1), na.rm =TRUE)
+        }
 
         foi = foi_prevac(adm = NA, R0 = R0, pop_moments = pop_mom, polydeg = 6)
 
@@ -99,20 +90,6 @@ fun_immunityStart = function(model_type = "Foi",
     }
 
     immunityStart = 1 - (exp(-foi * ages))
-
-    # # then years are from 1940 to year_end
-    # years = c(year_start:(year_end - 1))
-    #
-    #
-    # out = run_infections_unit(model_type,
-    #                           transmission_param,
-    #                           years,
-    #                           age_max,
-    #                           pop,
-    #                           old_coverage,
-    #                           immunityStart)
-    #
-    # immunityOut = out$immunity[nrow(out$immunity), ]  #interested in last immunity only
 
     return(immunityStart)
 }

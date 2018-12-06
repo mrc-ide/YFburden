@@ -32,8 +32,8 @@ run_burden_for_template = function(historic_dat,
   country_names = unique(template$country_name)
 
   ## check the input data only applies for these years, ages and countries ##
-  pop_all = dplyr::filter(pop_all, country_code %in% countries)
-  life_exp_GAVI = dplyr::filter(life_exp_GAVI, country_code %in% countries)
+  pop_all = pop_all %>% filter( country_code %in% countries)
+  life_exp_GAVI = life_exp_GAVI %>% filter( country_code %in% countries)
 
   #--------------------------------------------------------------------------------------------------#
   ### step 1: coverage ### ---------------------------------------------------------------------------

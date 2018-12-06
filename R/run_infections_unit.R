@@ -146,13 +146,13 @@ run_infections_unit = function(model_type = "Foi",
                                immunityStart) {
   ### simulate from 1940
   years = 1940:max(years_in)
+  ages = c(0:age_max)
+  n_years = length(years)
 
   ### get rid of NA in pop ###
   pop[is.na(pop)] = 0
   ####
 
-  ages = c(0:age_max)
-  n_years = length(years)
 
   ### declare set up
   immunity = new_infections = matrix(NA, nrow = n_years, ncol = age_max + 1)

@@ -29,6 +29,8 @@ reformat_life_expectancies = function(life_exp_GAVI,
                       age_from == unique(life_exp_GAVI$age_from)[a_ind])$value
 
     }
+
+
   }
 
   dimnames(life_exp)[[1]] = years_le
