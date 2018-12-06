@@ -7,7 +7,7 @@
 foi_prevac(adm, R0, pop_moments, polydeg = 6)
 }
 \arguments{
-\item{adm}{admin indeices}
+\item{adm}{admin indices}
 
 \item{R0}{R0 in admins}
 

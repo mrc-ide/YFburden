@@ -5,7 +5,7 @@
 \title{calculate immunity profile at start}
 \usage{
 fun_immunityStart(model_type = "Foi", transmission_param, age_max, pop,
-  old_coverage, year_end)
+  old_coverage)
 }
 \arguments{
 \item{model_type}{R0 or Foi. defaults to Foi}
@@ -17,8 +17,6 @@ fun_immunityStart(model_type = "Foi", transmission_param, age_max, pop,
 \item{pop}{population in country by year and age}
 
 \item{old_coverage}{vaccination coverage by year and age}
-
-\item{year_end}{year that we wish to have the immunity profile in}
 }
 \value{
 immunity profile by age in the first year of interest
