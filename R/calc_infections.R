@@ -43,7 +43,7 @@ calc_infections = function(param_samples,
     ### want to reshape into previous format ###
     pop_new = NULL
     for (y in max(pop_country$year) : min(pop_country$year)){
-      tmp = c(y, pop_country %>% filter( year == y)$value)
+      tmp = c(y, filter(pop_country, year == y)$value)
 
       if(length(tmp)< 102) {tmp = c(tmp, rep(NA, 102-length(tmp)))}
       pop_new = rbind(pop_new, tmp)
