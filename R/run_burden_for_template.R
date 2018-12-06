@@ -71,17 +71,16 @@ run_burden_for_template = function(historic_dat,
                                                                   length(years)),
                                                cohort_size = cohort_size[, paste0(ages[ageIndex]),
                                                                          paste0(countries[countryIndex])],
-                                               deaths = deaths[, paste0(ages[ageIndex]),
-                                                               paste0(countries[countryIndex])],
+                                               dalys = DALYs[, paste0(ages[ageIndex]),
+                                                             paste0(countries[countryIndex]) ]),
                                                cases = cases[, paste0(ages[ageIndex]),
                                                              paste0(countries[countryIndex])],
-                                               dalys = DALYs[, paste0(ages[ageIndex]),
-                                                             paste0(countries[countryIndex]) ]) )
+                                               deaths = deaths[, paste0(ages[ageIndex]),
+                                                             paste0(countries[countryIndex])] )
     }
   }
 
   output_df = output_df[, names(template)]
-
 
   # rounding #
   if(round){
