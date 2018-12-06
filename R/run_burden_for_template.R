@@ -62,23 +62,37 @@ run_burden_for_template = function(historic_dat,
 
 
       output_df = rbind( output_df, data.frame(disease = rep("YF", length(years)) ,
+
                                                run_id =  rep(run_id, length(years)),
+
                                                year = years,
+
                                                age = rep(ages[ageIndex], length(years)),
+
                                                country = rep(countries[countryIndex],
                                                              length(years)),
+
                                                country_name = rep(country_names[countryIndex],
                                                                   length(years)),
-                                               cohort_size = cohort_size[, paste0(ages[ageIndex]),
-                                                                         paste0(countries[countryIndex])],
-                                               dalys = DALYs[, paste0(ages[ageIndex]),
-                                                             paste0(countries[countryIndex]) ]),
-                                               cases = cases[, paste0(ages[ageIndex]),
-                                                             paste0(countries[countryIndex])],
-                                               deaths = deaths[, paste0(ages[ageIndex]),
-                                                             paste0(countries[countryIndex])] )
+
+                                               cohort_size = cohort_size[ ,
+                                                                          paste0(ages[ageIndex]),
+                                                                          paste0(countries[countryIndex])],
+
+                                               dalys = DALYs[ ,
+                                                              paste0(ages[ageIndex]),
+                                                              paste0(countries[countryIndex]) ],
+
+                                               cases = cases[ ,
+                                                              paste0(ages[ageIndex]),
+                                                              paste0(countries[countryIndex])],
+
+                                               deaths = deaths[ ,
+                                                                paste0(ages[ageIndex]),
+                                                                paste0(countries[countryIndex])] ))
     }
   }
+
 
   output_df = output_df[, names(template)]
 
