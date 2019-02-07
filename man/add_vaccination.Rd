@@ -4,10 +4,13 @@
 \alias{add_vaccination}
 \title{add vaccination coverage to change immunity profile}
 \usage{
-add_vaccination(coverage, age_first, age_last, immunity, skew = 0)
+add_vaccination(coverage, vac_eff = 1, age_first, age_last, immunity,
+  skew = 0)
 }
 \arguments{
 \item{coverage}{vaccination campaign coverage}
+
+\item{vac_eff}{vaccine efficacy defaults to 1}
 
 \item{age_first}{youngest age group to be vaccinated}
 

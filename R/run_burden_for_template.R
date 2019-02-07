@@ -4,6 +4,7 @@
 #' @param GAVI_preventive GAVI preventive campaign info - this includes all vaccination activities
 #' @param GAVI_switch which vaccination activity to compile
 #' @param param_samples transmission intensity in each admin 1 unit or country
+#' @param vac_eff vaccine efficacy
 #' @param pop_all population in all countries by year and age
 #' @param P_severe probability of severe infection
 #' @param P_severeDeath probability of dying if severe
@@ -18,6 +19,7 @@ run_burden_for_template = function(historic_dat,
                                    GAVI_preventive,
                                    GAVI_switch,
                                    param_samples,
+                                   vac_eff,
                                    pop_all,
                                    P_severe,
                                    P_severeDeath,
@@ -40,7 +42,7 @@ run_burden_for_template = function(historic_dat,
   coverage_df =  compile_vaccination(historic_dat, GAVI_preventive, WUENIC = NA, GAVI_switch)
 
   ### step 2: infections ### -------------------------------------------------------------------------
-  out1 = calc_infections(param_samples, coverage_df, pop_all, years, age_max = max(ages) )
+  out1 = calc_infections(param_samples, vac_eff, coverage_df, pop_all, years, age_max = max(ages) )
 
   infections = out1$infections
   cohort_size = out1$cohort_size

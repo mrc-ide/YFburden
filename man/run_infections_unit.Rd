@@ -4,13 +4,15 @@
 \alias{run_infections_unit}
 \title{calculate the number of infections in a country for the years specified}
 \usage{
-run_infections_unit(model_type = "Foi", transmission_param, years_in,
-  age_max, pop, coverage, immunityStart)
+run_infections_unit(model_type = "Foi", transmission_param,
+  vac_eff = 1, years_in, age_max, pop, coverage, immunityStart)
 }
 \arguments{
 \item{model_type}{whether R0 or Foi. Defaults to Foi}
 
 \item{transmission_param}{transmission intensity in that country}
+
+\item{vac_eff}{vaccine efficacy, defaults to 1}
 
 \item{years_in}{years of interest}
 

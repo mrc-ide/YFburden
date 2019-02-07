@@ -1,6 +1,7 @@
 #' Calculate the number of infections
 #'
 #' @param param_samples transmission intensity in each admin 1 unit or country
+#' @param vac_eff vaccine efficacy, defaults to 1
 #' @param coverage_df vaccination coverage
 #' @param pop_all population in all countries by year and age
 #' @param years years of interest
@@ -12,6 +13,7 @@
 #' @export
 
 calc_infections = function(param_samples,
+                           vac_eff = 1,
                            coverage_df,
                            pop_all,
                            years,
@@ -86,6 +88,7 @@ calc_infections = function(param_samples,
     #calculate burden in year of interest
     out = run_infections_unit(model_type = model_type,
                               transmission_param = param_country_ave,
+                              vac_eff = vac_eff,
                               years = years,
                               age_max = age_max,
                               pop = pop_new,

@@ -5,8 +5,8 @@
 \title{run burden steps and put into a template}
 \usage{
 run_burden_for_template(historic_dat, GAVI_preventive, GAVI_switch,
-  param_samples, pop_all, P_severe, P_severeDeath, life_exp_GAVI, template,
-  round = TRUE, run_id = NA)
+  param_samples, vac_eff, pop_all, P_severe, P_severeDeath, life_exp_GAVI,
+  template, round = TRUE, run_id = NA)
 }
 \arguments{
 \item{historic_dat}{= Historic vaccination coverages}
@@ -16,6 +16,8 @@ run_burden_for_template(historic_dat, GAVI_preventive, GAVI_switch,
 \item{GAVI_switch}{which vaccination activity to compile}
 
 \item{param_samples}{transmission intensity in each admin 1 unit or country}
+
+\item{vac_eff}{vaccine efficacy}
 
 \item{pop_all}{population in all countries by year and age}
 

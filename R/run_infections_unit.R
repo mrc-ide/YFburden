@@ -19,6 +19,7 @@ update_immunity = function(immunity) {
 #' add vaccination coverage to change immunity profile
 #'
 #' @param coverage vaccination campaign coverage
+#' @param vac_eff vaccine efficacy defaults to 1
 #' @param age_first youngest age group to be vaccinated
 #' @param age_last oldest age group to be vaccinated
 #' @param immunity current immunity in one year
@@ -27,12 +28,12 @@ update_immunity = function(immunity) {
 #' @return The immunity profile by age in one year
 #'  @export
 
-add_vaccination = function(coverage, age_first, age_last, immunity, skew = 0) {
+add_vaccination = function(coverage, vac_eff = 1, age_first, age_last, immunity, skew = 0) {
   ## year is the year of vaccination of the new birth cohort.
   if (is.na(skew)) {
     skew = 0
   }
-  coverage = pmin(coverage, 1)  #check that it is at most 1
+  coverage = pmin(coverage, 1) * vac_eff #check that it is at most 1
 
   ## immunity is the age distribution of immunity at the time point in question.
   if (skew == 0) {
@@ -128,6 +129,7 @@ generate_infections_static = function(foi, pop, immunity) {
 #'
 #' @param model_type whether R0 or Foi. Defaults to Foi
 #' @param transmission_param transmission intensity in that country
+#' @param vac_eff vaccine efficacy, defaults to 1
 #' @param years_in years of interest
 #' @param age_max maximum age group
 #' @param pop population in countryby year and age
@@ -139,6 +141,7 @@ generate_infections_static = function(foi, pop, immunity) {
 
 run_infections_unit = function(model_type = "Foi",
                                transmission_param,
+                               vac_eff = 1,
                                years_in,
                                age_max,
                                pop,
@@ -195,6 +198,7 @@ run_infections_unit = function(model_type = "Foi",
         if (coverage$year[y] == years[yearIndex]) {
 
           immunity[yearIndex, ] = add_vaccination(coverage$coverage[y],
+                                                  vac_eff = vac_eff,
                                                   age_first = coverage$age_first[y],
                                                   age_last = coverage$age_last[y],
                                                   immunity[yearIndex,],
