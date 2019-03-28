@@ -15,7 +15,7 @@ foi_prevac = function(adm,
   lambda = NULL
   if (polydeg > 0) {
     for (deg in 1:polydeg) {
-      if (!anyNA(adm)) {
+      if (is.na(max(adm)) == 0) {
         PM = as.numeric(pop_moments[, deg + 1])
       } else {
         PM = pop_moments[deg]
@@ -35,7 +35,7 @@ foi_prevac = function(adm,
   if (polydeg > 2) {
     out = apply(out, 2, min, na.rm = T)
   }
-  if (!anyNA(adm)){
+  if (is.na(max(adm)) == 0){
     names(out) = paste("FOI", pop_moments[1], sep = "_")
   }  #NAME IS ATTACHED TO POP_MOMENTS FOR WHOLE
   return(out)
@@ -63,7 +63,7 @@ fun_immunityStart = function(model_type = "Foi",
                              old_coverage) {
 
     ages = c(0:age_max)
-    year_start = 1939 #before vaccination started
+    year_start = 1940 #before vaccination started
 
     # for R0 need the force of infection before vaccination
     if (model_type == "R0") {
@@ -76,9 +76,12 @@ fun_immunityStart = function(model_type = "Foi",
                           sum(pop_start[2:length(pop_start)], na.rm = TRUE)
 
         pop_mom = rep(NA, 6)
-        for(i in 1:6){
-          pop_mom[i] = sum(pop_prop * ages^(i-1), na.rm =TRUE)
-        }
+        pop_mom[1] = sum(pop_prop, na.rm = TRUE)
+        pop_mom[2] = sum(pop_prop * ages, na.rm = TRUE)
+        pop_mom[3] = sum(pop_prop * ages * ages, na.rm = TRUE)
+        pop_mom[4] = sum(pop_prop * ages * ages * ages, na.rm = TRUE)
+        pop_mom[5] = sum(pop_prop * ages * ages * ages * ages, na.rm = TRUE)
+        pop_mom[6] = sum(pop_prop * ages * ages * ages * ages * ages, na.rm = TRUE)
 
         foi = foi_prevac(adm = NA, R0 = R0, pop_moments = pop_mom, polydeg = 6)
 

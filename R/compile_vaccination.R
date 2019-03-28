@@ -32,21 +32,21 @@ compile_vaccination = function(historic_dat,
   GAVI_preventive = GAVI_preventive %>% filter( coverage > 0)
 
   #####################
+  if(nrow(GAVI_preventive)>0){
+    ### ADD GAVI TO coverage df ###
+    for (i in 1 : nrow(GAVI_preventive)) {
 
-  ### ADD GAVI TO coverage df ###
-  for (i in 1 : nrow(GAVI_preventive)) {
+      if (GAVI_preventive$year[i] < year_cut) {
 
-    if (GAVI_preventive$year[i] < year_cut) {
+        historic_dat = rbind(historic_dat,
+                             cbind(GAVI_preventive[i, ],
+                                   skew = switch(GAVI_preventive$activity_type[i],
+                                                 "routine" = 0,
+                                                 "campaign" = -1)))
 
-      historic_dat = rbind(historic_dat,
-                           cbind(GAVI_preventive[i, ],
-                                 skew = switch(GAVI_preventive$activity_type[i],
-                                               "routine" = 0,
-                                               "campaign" = -1)))
-
+      }
     }
   }
-
   #########################
   if(!anyNA(WUENIC)){
     ### ADD WUENIC FOR GAB AND GNQ ###

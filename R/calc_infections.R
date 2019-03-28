@@ -60,7 +60,8 @@ calc_infections = function(param_samples,
                                          coverage_country$target > 0, "coverage"]))) {
 
       coverage_country[coverage_country$activity_type == "campaign" &
-                         coverage_country$target > 0 & !is.na(coverage_country$target),
+                         coverage_country$target > 0 &
+                         !is.na(coverage_country$target),
                        "coverage"] =
         as.numeric(coverage_country[coverage_country$activity_type == "campaign" &
                                       coverage_country$target > 0 & !is.na(coverage_country$target),
@@ -68,7 +69,7 @@ calc_infections = function(param_samples,
         rowSums(pop_new[match(coverage_country[coverage_country$activity_type == "campaign" &
                                                  coverage_country$target > 0 & !is.na(coverage_country$target),
                                                "year"], pop_new[,1]), ,
-                        drop = FALSE])
+                        drop = FALSE], na.rm = TRUE)
 
     }
 
@@ -89,7 +90,7 @@ calc_infections = function(param_samples,
     out = run_infections_unit(model_type = model_type,
                               transmission_param = param_country_ave,
                               vac_eff = vac_eff,
-                              years = years,
+                              years_in = years,
                               age_max = age_max,
                               pop = pop_new,
                               coverage = coverage_country,
