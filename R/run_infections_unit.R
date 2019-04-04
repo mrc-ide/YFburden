@@ -147,6 +147,7 @@ run_infections_unit = function(model_type = "Foi",
                                pop,
                                coverage,
                                immunityStart) {
+
   ### simulate from 1940
   years = 1940:max(years_in)
   ages = c(0:age_max)
