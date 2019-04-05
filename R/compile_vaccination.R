@@ -28,8 +28,7 @@ compile_vaccination = function(historic_dat,
     GAVI_preventive = GAVI_preventive %>% filter( activity_type == GAVI_switch)
   }
 
-  # limit to only entries where coverage>0 to save time
-  GAVI_preventive = GAVI_preventive %>% filter( coverage > 0)
+
 
   #####################
   if(nrow(GAVI_preventive)>0){
@@ -47,6 +46,7 @@ compile_vaccination = function(historic_dat,
       }
     }
   }
+
   #########################
   if(!anyNA(WUENIC)){
     ### ADD WUENIC FOR GAB AND GNQ ###
