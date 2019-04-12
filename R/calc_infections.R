@@ -108,9 +108,9 @@ calc_infections = function(param_samples,
 
   }
 
-  dimnames(infections)[[1]] = dimnames(cohort_size)[[1]] = as.list(years)
-  dimnames(infections)[[2]] = dimnames(cohort_size)[[2]] = as.list(ages)
-  dimnames(infections)[[3]] = dimnames(cohort_size)[[3]] = as.list(countries)
+  dimnames(infections)[[1]] = dimnames(cohort_size)[[1]] = dimnames(immunity_out)[[1]] = as.list(years)
+  dimnames(infections)[[2]] = dimnames(cohort_size)[[2]] = dimnames(immunity_out)[[2]] = as.list(ages)
+  dimnames(infections)[[3]] = dimnames(cohort_size)[[3]] = dimnames(immunity_out)[[3]] = as.list(countries)
 
 
   return(list(infections = infections, cohort_size = cohort_size, immunity = immunity_out))
