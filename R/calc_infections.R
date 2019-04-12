@@ -9,7 +9,7 @@
 #' @param model_type whether "Foi" or "R0". Defaults to "Foi".
 #'
 #' @return The number of infections in each country in each year of interest AND
-#'         cohort size in each country in each year of interest
+#'         cohort size in each country in each year of interest AND immunity profiles.
 #' @export
 
 calc_infections = function(param_samples,
@@ -33,6 +33,9 @@ calc_infections = function(param_samples,
 
   cohort_size = rep(NA, n_years*n_ages*n_countries)
   dim(cohort_size) = c( n_years, n_ages, n_countries)
+
+  immunity_out = rep(NA, n_years*n_ages*n_countries)
+  dim(immunity_out) = c( n_years, n_ages, n_countries)
 
   for (country_ind in 1 : n_countries){
 
@@ -101,6 +104,8 @@ calc_infections = function(param_samples,
 
     cohort_size[ , , country_ind] = pop_new[ which( pop_new[,1] %in% years), -1]
 
+    immunity_out[ , , country_ind] = out$immunity
+
   }
 
   dimnames(infections)[[1]] = dimnames(cohort_size)[[1]] = as.list(years)
@@ -108,6 +113,6 @@ calc_infections = function(param_samples,
   dimnames(infections)[[3]] = dimnames(cohort_size)[[3]] = as.list(countries)
 
 
-  return(list(infections = infections, cohort_size = cohort_size))
+  return(list(infections = infections, cohort_size = cohort_size, immunity = immunity_out))
 
 }

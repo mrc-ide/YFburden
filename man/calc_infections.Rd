@@ -24,7 +24,7 @@ calc_infections(param_samples, vac_eff = 1, coverage_df, pop_all, years,
 }
 \value{
 The number of infections in each country in each year of interest AND
-        cohort size in each country in each year of interest
+        cohort size in each country in each year of interest AND immunity profiles.
 }
 \description{
 Calculate the number of infections
