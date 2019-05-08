@@ -26,7 +26,7 @@ update_immunity = function(immunity) {
 #' @param skew skew of vaccination. Defaults to 0 where vaccination is random
 #'
 #' @return The immunity profile by age in one year
-#'  @export
+#' @export
 
 add_vaccination = function(coverage, vac_eff = 1, age_first, age_last, immunity, skew = 0) {
   ## year is the year of vaccination of the new birth cohort.

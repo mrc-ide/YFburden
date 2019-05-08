@@ -22,7 +22,6 @@ add_vaccination(coverage, vac_eff = 1, age_first, age_last, immunity,
 }
 \value{
 The immunity profile by age in one year
- @export
 }
 \description{
 add vaccination coverage to change immunity profile
