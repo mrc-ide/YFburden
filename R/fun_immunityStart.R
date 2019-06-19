@@ -86,9 +86,7 @@ fun_immunityStart = function(model_type = "Foi",
         foi = foi_prevac(adm = NA, R0 = R0, pop_moments = pop_mom, polydeg = 6)
 
 
-    }
-
-    if (model_type == "Foi") {
+    } else if (model_type == "Foi") {
         foi = transmission_param
     }
 
