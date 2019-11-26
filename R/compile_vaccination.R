@@ -37,7 +37,7 @@ compile_vaccination = function(historic_dat,
 
       if (GAVI_preventive$year[i] < year_cut) {
 
-        historic_dat = dplyr::bind_rows(historic_dat,
+        historic_dat = rbind(historic_dat,
                              cbind(GAVI_preventive[i, ],
                                    skew = switch(GAVI_preventive$activity_type[i],
                                                  "routine" = 0,
