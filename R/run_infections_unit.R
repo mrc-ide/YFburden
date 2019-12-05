@@ -176,6 +176,20 @@ run_infections_unit = function(model_type = "Foi",
       immunity[yearIndex, ] = update_immunity(immunity[yearIndex - 1, ])
     }
 
+    ## add vaccination at the end of the year: coverage_df: year, age, coverage.
+    if (nrow(coverage) > 0)
+      for (y in 1:nrow(coverage)) {
+        if (coverage$year[y]-1 == years[yearIndex]) {
+
+          immunity[yearIndex, ] = add_vaccination(coverage$coverage[y],
+                                                  vac_eff = vac_eff,
+                                                  age_first = coverage$age_first[y],
+                                                  age_last = coverage$age_last[y],
+                                                  immunity[yearIndex,],
+                                                  skew = 0)#coverage$skew[y])
+        }
+      }
+
     ## generate new infections
 
     tmp = switch(model_type,
@@ -193,19 +207,7 @@ run_infections_unit = function(model_type = "Foi",
     colnames(new_infections) = colnames(immunity) = 0:age_max
 
 
-    ## add vaccination at the end of the year: coverage_df: year, age, coverage.
-    if (nrow(coverage) > 0)
-      for (y in 1:nrow(coverage)) {
-        if (coverage$year[y] == years[yearIndex]) {
 
-          immunity[yearIndex, ] = add_vaccination(coverage$coverage[y],
-                                                  vac_eff = vac_eff,
-                                                  age_first = coverage$age_first[y],
-                                                  age_last = coverage$age_last[y],
-                                                  immunity[yearIndex,],
-                                                  skew = 0)#coverage$skew[y])
-        }
-      }
 
   }
 
