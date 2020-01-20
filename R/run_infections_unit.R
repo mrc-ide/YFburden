@@ -179,7 +179,7 @@ run_infections_unit = function(model_type = "Foi",
     ## add vaccination at the end of the year: coverage_df: year, age, coverage.
     if (nrow(coverage) > 0)
       for (y in 1:nrow(coverage)) {
-        if (coverage$year[y] == years[yearIndex]-1) {
+        if (coverage$year[y] == years[yearIndex]) {
 
           immunity[yearIndex, ] = add_vaccination(coverage$coverage[y],
                                                   vac_eff = vac_eff,
