@@ -61,25 +61,25 @@ calc_infections = function(param_samples,
     ##### FOR CAMPAIGN USE DOSES RATHER THAN COVERAGE #####
     # UPDATE: THIS IS ALL SPECIFIED AT NATIONAL LEVEL NOW #
 
-    # if (!is.null(length(coverage_country[coverage_country$activity_type == "campaign" &
-    #                                      coverage_country$target > 0, "coverage"]))) {
-    #
-    #   coverage_country[coverage_country$activity_type == "campaign" &
-    #                      coverage_country$target > 0 &
-    #                      !is.na(coverage_country$target),
-    #                    "coverage"] =
-    #     as.numeric(coverage_country[coverage_country$activity_type == "campaign" &
-    #                                   coverage_country$target > 0 & !is.na(coverage_country$target),
-    #                                 "target"]) *
-    #     as.numeric(coverage_country[coverage_country$activity_type == "campaign" &
-    #                                   coverage_country$target > 0 & !is.na(coverage_country$target),
-    #                                 "coverage"])/
-    #     rowSums(pop_new[match(coverage_country[coverage_country$activity_type == "campaign" &
-    #                                              coverage_country$target > 0 & !is.na(coverage_country$target),
-    #                                            "year"], pop_new[,1]), ,
-    #                     drop = FALSE], na.rm = TRUE)
-    #
-    # }
+    if (!is.null(length(coverage_country[coverage_country$activity_type == "campaign" &
+                                         coverage_country$target > 0, "coverage"]))) {
+
+      coverage_country[coverage_country$activity_type == "campaign" &
+                         coverage_country$target > 0 &
+                         !is.na(coverage_country$target),
+                       "coverage"] =
+        as.numeric(coverage_country[coverage_country$activity_type == "campaign" &
+                                      coverage_country$target > 0 & !is.na(coverage_country$target),
+                                    "target"]) *
+        as.numeric(coverage_country[coverage_country$activity_type == "campaign" &
+                                      coverage_country$target > 0 & !is.na(coverage_country$target),
+                                    "coverage"])/
+        rowSums(pop_new[match(coverage_country[coverage_country$activity_type == "campaign" &
+                                                 coverage_country$target > 0 & !is.na(coverage_country$target),
+                                               "year"], pop_new[,1]), ,
+                        drop = FALSE], na.rm = TRUE)
+
+    }
 
     #collect transmission param for that country
     param_country = param_samples[ grep(countries[country_ind], names(param_samples)) ]
