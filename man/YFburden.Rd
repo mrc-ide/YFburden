@@ -3,7 +3,6 @@
 \docType{package}
 \name{YFburden}
 \alias{YFburden}
-\alias{YFburden-package}
 \title{YFburden: A package for calculating the burden of Yellow Fever across
           the African endemic region and GAVI eligible countries.}
 \description{

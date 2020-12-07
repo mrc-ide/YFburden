@@ -4,8 +4,7 @@
 \alias{add_vaccination}
 \title{add vaccination coverage to change immunity profile}
 \usage{
-add_vaccination(coverage, vac_eff = 1, age_first, age_last, immunity,
-  skew = 0)
+add_vaccination(coverage, vac_eff = 1, age_first, age_last, immunity, skew = 0)
 }
 \arguments{
 \item{coverage}{vaccination campaign coverage}
