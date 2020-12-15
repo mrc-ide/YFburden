@@ -4,8 +4,16 @@
 \alias{calc_DALYs}
 \title{Calculate the number of DALYS}
 \usage{
-calc_DALYs(cases, deaths, life_exp_GAVI, P_severe, d_acute = 17.8/365,
-  dw_acute = 0.172, d_conv = 28/365, dw_conv = 0.024)
+calc_DALYs(
+  cases,
+  deaths,
+  life_exp_GAVI,
+  P_severe,
+  d_acute = 17.8/365,
+  dw_acute = 0.172,
+  d_conv = 28/365,
+  dw_conv = 0.024
+)
 }
 \arguments{
 \item{cases}{number of cases per year, age and country}

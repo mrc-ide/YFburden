@@ -4,8 +4,15 @@
 \alias{calc_infections}
 \title{Calculate the number of infections}
 \usage{
-calc_infections(param_samples, vac_eff = 1, coverage_df, pop_all, years,
-  age_max, model_type = "Foi")
+calc_infections(
+  param_samples,
+  vac_eff = 1,
+  coverage_df,
+  pop_all,
+  years,
+  age_max,
+  model_type = "Foi"
+)
 }
 \arguments{
 \item{param_samples}{transmission intensity in each admin 1 unit or country}

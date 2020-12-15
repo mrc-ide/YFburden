@@ -4,8 +4,13 @@
 \alias{fun_immunityStart}
 \title{calculate immunity profile at start}
 \usage{
-fun_immunityStart(model_type = "Foi", transmission_param, age_max, pop,
-  old_coverage)
+fun_immunityStart(
+  model_type = "Foi",
+  transmission_param,
+  age_max,
+  pop,
+  old_coverage
+)
 }
 \arguments{
 \item{model_type}{R0 or Foi. defaults to Foi}
